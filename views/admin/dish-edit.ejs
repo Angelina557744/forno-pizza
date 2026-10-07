@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <%- include('partials/layout-head', { title: 'Редактирование блюда', active: 'dishes' }) %>
+
+  <a href="/admin/dishes" class="admin-back">← Все блюда</a>
+
+  <form method="POST" action="/admin/dishes/<%= dish.id %>/edit" class="admin-form">
+    <div class="admin-card">
+      <h2 class="admin-card__title">Основное</h2>
+
+      <div class="admin-form-grid">
+        <label class="field field--full">
+          <span>Название</span>
+          <input type="text" name="name" value="<%= dish.name %>" required>
+        </label>
+
+        <label class="field field--full">
+          <span>Описание</span>
+          <textarea name="description" rows="3"><%= dish.description || '' %></textarea>
+        </label>
+
+        <label class="field field--full">
+          <span>Состав</span>
+          <textarea name="composition" rows="3"><%= dish.composition || '' %></textarea>
+        </label>
+
+        <label class="field">
+          <span>Цена, ₽</span>
+          <input type="number" name="price" value="<%= dish.price %>" required min="0">
+        </label>
+
+        <label class="field">
+          <span>Категория</span>
+          <input type="text" value="<%= categories.find(c => c.id === dish.category_id).name %>" disabled>
+        </label>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h2 class="admin-card__title">Метки и статус</h2>
+
+      <div class="admin-checks">
+        <label class="admin-check">
+          <input type="checkbox" name="is_available" <%= dish.is_available ? 'checked' : '' %>>
+          <span>В меню</span>
+        </label>
+        <label class="admin-check">
+          <input type="checkbox" name="is_vegetarian" <%= dish.is_vegetarian ? 'checked' : '' %>>
+          <span>Вегетарианское</span>
+        </label>
+        <label class="admin-check">
+          <input type="checkbox" name="is_spicy" <%= dish.is_spicy ? 'checked' : '' %>>
+          <span>Острое</span>
+        </label>
+        <label class="admin-check">
+          <input type="checkbox" name="is_gluten_free" <%= dish.is_gluten_free ? 'checked' : '' %>>
+          <span>Без глютена</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn btn--solid btn--full" type="submit">Сохранить изменения</button>
+  </form>
+
+  <%- include('partials/layout-foot') %>
+</body>
+</html>

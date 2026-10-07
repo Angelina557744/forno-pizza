@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000" # Внешний порт:Внутренний порт
+    volumes:
+      # Монтируем папку data с хоста в контейнер. 
+      # Всё, что создастся в /app/data, сохранится на диске хостинга.
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_PATH=/app/data/forno.db
+      # Остальные переменные (SESSION_SECRET и т.д.) лучше задать в панели хостинга

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <%- include('partials/layout-head', { title: 'Бронирования', active: 'bookings' }) %>
+
+  <% if (bookings.length === 0) { %>
+    <p class="admin-empty">Бронирований пока нет</p>
+  <% } else { %>
+    <div class="admin-table">
+      <div class="admin-table__head admin-table__head--bookings">
+        <span>ID</span>
+        <span>Дата заявки</span>
+        <span>Имя</span>
+        <span>Телефон</span>
+        <span>Визит</span>
+        <span>Гостей</span>
+        <span>Статус</span>
+        <span></span>
+      </div>
+      <% bookings.forEach(function(b) { %>
+        <div class="admin-table__row admin-table__row--bookings">
+          <span class="admin-table__mono">#<%= b.id %></span>
+          <span class="admin-table__mono"><%= b.created_at.slice(0, 16) %></span>
+          <span><%= b.name %></span>
+          <span class="admin-table__mono"><%= b.phone %></span>
+          <span class="admin-table__mono"><%= b.date %> <%= b.time %></span>
+          <span><%= b.guests %></span>
+          <span class="admin-status admin-status--<%= b.status %>"><%= {new:'Новая',confirmed:'Подтверждена',cancelled:'Отменена'}[b.status] || b.status %></span>
+          <form method="POST" action="/admin/bookings/<%= b.id %>/status" class="admin-inline-form">
+            <select name="status" onchange="this.form.submit()">
+              <option value="new" <%= b.status === 'new' ? 'selected' : '' %>>Новая</option>
+              <option value="confirmed" <%= b.status === 'confirmed' ? 'selected' : '' %>>Подтверждена</option>
+              <option value="cancelled" <%= b.status === 'cancelled' ? 'selected' : '' %>>Отменена</option>
+            </select>
+          </form>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <%- include('partials/layout-foot') %>
+</body>
+</html>

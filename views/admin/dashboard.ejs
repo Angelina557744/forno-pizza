@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <%- include('partials/layout-head', { title: 'Панель управления', active: 'dashboard' }) %>
+
+  <div class="admin-stats">
+    <div class="admin-stat">
+      <span class="admin-stat__label">Всего заказов</span>
+      <strong class="admin-stat__value"><%= ordersCount %></strong>
+    </div>
+    <div class="admin-stat admin-stat--accent">
+      <span class="admin-stat__label">Новые</span>
+      <strong class="admin-stat__value"><%= newOrders %></strong>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat__label">Бронирования</span>
+      <strong class="admin-stat__value"><%= bookingsCount %></strong>
+    </div>
+    <div class="admin-stat admin-stat--accent">
+      <span class="admin-stat__label">Новые брони</span>
+      <strong class="admin-stat__value"><%= newBookings %></strong>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat__label">Блюд в меню</span>
+      <strong class="admin-stat__value"><%= dishesCount %></strong>
+    </div>
+    <div class="admin-stat admin-stat--dark">
+      <span class="admin-stat__label">Выручка</span>
+      <strong class="admin-stat__value"><%= revenue %> ₽</strong>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section__head">
+      <h2 class="admin-section__title">Последние заказы</h2>
+      <a href="/admin/orders" class="admin-link">Все заказы →</a>
+    </div>
+
+    <% if (recentOrders.length === 0) { %>
+      <p class="admin-empty">Заказов пока нет</p>
+    <% } else { %>
+      <div class="admin-table">
+        <div class="admin-table__head">
+          <span>№</span>
+          <span>Клиент</span>
+          <span>Телефон</span>
+          <span>Сумма</span>
+          <span>Статус</span>
+          <span></span>
+        </div>
+        <% recentOrders.forEach(function(o) { %>
+          <div class="admin-table__row">
+            <span class="admin-table__mono"><%= o.order_number %></span>
+            <span><%= o.customer_name %></span>
+            <span class="admin-table__mono"><%= o.customer_phone %></span>
+            <span class="admin-table__mono"><%= o.total %> ₽</span>
+            <span class="admin-status admin-status--<%= o.status %>"><%= {new:'Новый',processing:'В работе',delivered:'Доставлен',cancelled:'Отменён'}[o.status] || o.status %></span>
+            <a href="/admin/orders/<%= o.id %>" class="admin-link">Открыть</a>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+
+  <%- include('partials/layout-foot') %>
+</body>
+</html>

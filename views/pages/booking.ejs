@@ -1,0 +1,154 @@
+<section class="page-hero">
+  <div class="container">
+    <span class="page-hero__eyebrow"><span class="section-num">Бронирование</span></span>
+    <h1 class="page-hero__title">Ваш стол <em>у печи</em></h1>
+    <p class="page-hero__lead">Оставьте заявку, и мы подтвердим бронь звонком. Столики у печи бронируются за 2 часа до визита.</p>
+  </div>
+</section>
+
+<section class="booking-page">
+  <div class="container">
+    <div class="booking-page__grid">
+
+      <div class="booking-page__info">
+        <h2 class="booking-page__info-title">Как это работает</h2>
+        <div class="booking-page__steps">
+          <div class="booking-step">
+            <span class="booking-step__num">01</span>
+            <p>Заполняете форму бронирования на удобные дату и время</p>
+          </div>
+          <div class="booking-step">
+            <span class="booking-step__num">02</span>
+            <p>Мы подтверждаем бронь звонком в течение 15 минут</p>
+          </div>
+          <div class="booking-step">
+            <span class="booking-step__num">03</span>
+            <p>Приходите и наслаждаетесь вечером. Стол ждёт вас 20 минут от указанного времени</p>
+          </div>
+        </div>
+
+        <div class="booking-page__note">
+          <p>Если вам нужно забронировать зал под мероприятие или у вас больше 10 гостей, позвоните нам: <a href="tel:+74951234567">+7 495 123 45 67</a>.</p>
+        </div>
+      </div>
+
+      <div class="booking-page__form-wrap">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="booking-success">
+            <svg viewBox="0 0 60 60" fill="none">
+              <circle cx="30" cy="30" r="27" stroke="currentColor" stroke-width="1.2" opacity="0.3"/>
+              <path d="M20 31l7 7 14-16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h3>Заявка отправлена</h3>
+            <p>Мы свяжемся с вами для подтверждения брони в течение 15 минут.</p>
+            <a href="/" class="btn btn--ghost">На главную</a>
+          </div>
+        <% } else { %>
+          <% if (typeof error !== 'undefined' && error) { %>
+            <div class="booking-error"><%= error %></div>
+          <% } %>
+
+          <form class="booking-form" method="POST" action="/booking" id="bookingForm" novalidate>
+            <div class="booking-form__row">
+              <label class="field">
+                <span>Имя</span>
+                <input type="text" name="name" required minlength="2" maxlength="60" placeholder="Ваше имя">
+              </label>
+              <label class="field">
+                <span>Телефон</span>
+                <input type="tel" name="phone" required placeholder="+7 999 000 00 00" pattern="[\\d\\s\\+\\-\\(\\)]{10,20}">
+              </label>
+            </div>
+
+            <div class="booking-form__row">
+              <label class="field">
+                <span>Дата</span>
+                <input type="date" name="date" required id="bookingDate">
+              </label>
+              <label class="field">
+                <span>Время</span>
+                <input type="time" name="time" required min="12:00" max="22:00" step="900">
+              </label>
+              <label class="field">
+                <span>Гостей</span>
+                <select name="guests" required>
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field field--full">
+              <span>Комментарий</span>
+              <textarea name="comment" rows="3" maxlength="300" placeholder="Пожелания, особый повод, место у окна"></textarea>
+            </label>
+
+            <button class="btn btn--solid btn--full" type="submit">Забронировать стол</button>
+          </form>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    const form = document.getElementById('bookingForm');
+    const dateInput = document.getElementById('bookingDate');
+    if (!form || !dateInput) return;
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const minDate = `${yyyy}-${mm}-${dd}`;
+    dateInput.min = minDate;
+
+    const max = new Date();
+    max.setMonth(max.getMonth() + 3);
+    const myyyy = max.getFullYear();
+    const mmm = String(max.getMonth() + 1).padStart(2, '0');
+    const mdd = String(max.getDate()).padStart(2, '0');
+    dateInput.max = `${myyyy}-${mmm}-${mdd}`;
+
+    form.addEventListener('submit', (e) => {
+      const date = dateInput.value;
+      const time = form.querySelector('input[name="time"]').value;
+      const phone = form.querySelector('input[name="phone"]').value.trim();
+      const name = form.querySelector('input[name="name"]').value.trim();
+
+      if (date < minDate) {
+        e.preventDefault();
+        alert('Дата не может быть в прошлом.');
+        return;
+      }
+
+      if (time < '12:00' || time > '22:00') {
+        e.preventDefault();
+        alert('Мы принимаем брони с 12:00 до 22:00.');
+        return;
+      }
+
+      if (phone.replace(/\D/g, '').length < 10) {
+        e.preventDefault();
+        alert('Введите корректный номер телефона.');
+        return;
+      }
+
+      if (name.length < 2) {
+        e.preventDefault();
+        alert('Имя должно содержать минимум 2 символа.');
+        return;
+      }
+    });
+  })();
+</script>

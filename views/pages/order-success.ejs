@@ -1,0 +1,54 @@
+<section class="success-page">
+  <div class="container">
+    <div class="success-page__inner">
+      <svg class="success-page__check" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+        <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="1.2" opacity="0.3"/>
+        <path d="M26 41l10 10 20-22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      <span class="section-num">Заказ принят</span>
+      <h1 class="success-page__title">Спасибо, <%= order.customer_name %>!</h1>
+      <p class="success-page__text">Мы уже начали готовить. Заказ №<strong><%= order.order_number %></strong> передан на кухню. <%= order.delivery_type === 'delivery' ? 'Курьер приедет в течение 45 минут.' : 'Ждём вас по адресу: ул. Малая Бронная, 24.' %></p>
+
+      <div class="success-page__details">
+        <div class="success-page__row">
+          <span>Номер заказа</span>
+          <strong><%= order.order_number %></strong>
+        </div>
+        <div class="success-page__row">
+          <span>Способ получения</span>
+          <strong><%= order.delivery_type === 'delivery' ? 'Доставка' : 'Самовывоз' %></strong>
+        </div>
+        <% if (order.address) { %>
+          <div class="success-page__row">
+            <span>Адрес</span>
+            <strong><%= order.address %></strong>
+          </div>
+        <% } %>
+        <div class="success-page__row">
+          <span>Оплата</span>
+          <strong><%= order.payment_method === 'online' ? 'Картой онлайн' : 'При получении' %></strong>
+        </div>
+        <div class="success-page__row success-page__row--total">
+          <span>Итого</span>
+          <strong><%= order.total %> ₽</strong>
+        </div>
+      </div>
+
+      <div class="success-page__items">
+        <h2>Состав заказа</h2>
+        <% items.forEach(function(item) { %>
+          <div class="success-page__item">
+            <span><%= item.dish_name %> × <%= item.quantity %></span>
+            <span><%= item.price * item.quantity %> ₽</span>
+          </div>
+        <% }); %>
+      </div>
+
+      <div class="success-page__actions">
+        <a href="/" class="btn btn--solid">На главную</a>
+        <a href="/menu" class="btn btn--ghost">Заказать ещё</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Forno — дровяная пиццерия. Неаполитанская пицца, паста, антипасти. Доставка и бронь столика.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-page="<%= currentPath %>">
+
+
+
+
+  <%- include('partials/header') %>
+
+  <main class="main">
+    <%- body %>
+  </main>
+
+  <%- include('partials/footer') %>
+  <%- include('partials/cart-drawer') %>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/cart.js"></script>
+  <% if (currentPath === '/menu' || currentPath.startsWith('/menu/')) { %>
+  <script src="/js/pizza-builder.js"></script>
+  <% } %>
+
+  <% if (currentPath === '/menu' || currentPath.startsWith('/menu/')) { %>
+  <script src="/js/menu-filters.js"></script>
+  <% } %>
+
+</body>
+</html>

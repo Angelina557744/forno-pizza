@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/
+forno.db
+forno.db-shm
+forno.db-wal

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <div class="admin-login">
+    <div class="admin-login__card">
+      <a href="/" class="admin-login__logo">Forno</a>
+      <h1 class="admin-login__title">Панель управления</h1>
+      <p class="admin-login__sub">Вход для сотрудников</p>
+
+      <% if (error) { %>
+        <div class="admin-login__error"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/admin/login" class="admin-login__form">
+        <label class="field">
+          <span>Логин</span>
+          <input type="text" name="login" required autofocus>
+        </label>
+        <label class="field">
+          <span>Пароль</span>
+          <input type="password" name="password" required>
+        </label>
+        <button class="btn btn--solid btn--full" type="submit">Войти</button>
+      </form>
+
+      <a href="/" class="admin-login__back">← Вернуться на сайт</a>
+    </div>
+  </div>
+</body>
+</html>

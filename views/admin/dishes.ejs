@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <%- include('partials/layout-head', { title: 'Блюда', active: 'dishes' }) %>
+
+  <div class="admin-table">
+    <div class="admin-table__head admin-table__head--dishes">
+      <span>ID</span>
+      <span>Категория</span>
+      <span>Название</span>
+      <span>Цена</span>
+      <span>Статус</span>
+      <span>Метки</span>
+      <span></span>
+    </div>
+    <% dishes.forEach(function(d) { %>
+      <div class="admin-table__row admin-table__row--dishes">
+        <span class="admin-table__mono">#<%= d.id %></span>
+        <span><%= d.category_name %></span>
+        <span><%= d.name %></span>
+        <span class="admin-table__mono"><%= d.price %> ₽</span>
+        <span class="admin-status admin-status--<%= d.is_available ? 'delivered' : 'cancelled' %>"><%= d.is_available ? 'В меню' : 'Скрыто' %></span>
+        <span class="admin-tags">
+          <% if (d.is_pizza) { %><em>пицца</em><% } %>
+          <% if (d.is_vegetarian) { %><em>вег</em><% } %>
+          <% if (d.is_spicy) { %><em>остро</em><% } %>
+          <% if (d.is_gluten_free) { %><em>без глютена</em><% } %>
+        </span>
+        <a href="/admin/dishes/<%= d.id %>/edit" class="admin-link">Изменить</a>
+      </div>
+    <% }); %>
+  </div>
+
+  <%- include('partials/layout-foot') %>
+</body>
+</html>

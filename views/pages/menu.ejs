@@ -1,0 +1,72 @@
+<section class="page-hero">
+  <div class="container">
+    <span class="page-hero__eyebrow"><span class="section-num">Меню</span></span>
+    <h1 class="page-hero__title">Из печи <em>и не только</em></h1>
+    <p class="page-hero__lead">Пицца на дровах, свежая паста, антипасти и десерты. Всё готовим на месте, без полуфабрикатов.</p>
+  </div>
+</section>
+
+<section class="menu-section">
+  <div class="container">
+
+    <div class="menu-filters" data-menu-filters>
+      <button class="filter-btn <%= !filter ? 'is-active' : '' %>" data-filter="">Всё</button>
+      <button class="filter-btn <%= filter === 'vegetarian' ? 'is-active' : '' %>" data-filter="vegetarian">Вегетарианское</button>
+      <button class="filter-btn <%= filter === 'spicy' ? 'is-active' : '' %>" data-filter="spicy">Острое</button>
+      <button class="filter-btn <%= filter === 'gluten-free' ? 'is-active' : '' %>" data-filter="gluten-free">Без глютена</button>
+    </div>
+
+    <nav class="menu-categories">
+      <% categories.forEach(function(cat) { %>
+        <a href="#cat-<%= cat.slug %>" class="menu-categories__link"><%= cat.name %></a>
+      <% }); %>
+    </nav>
+
+    <% categories.forEach(function(cat) { %>
+      <% var catDishes = dishes.filter(function(d) { return d.category_slug === cat.slug; }); %>
+      <% if (catDishes.length) { %>
+        <div class="menu-group" id="cat-<%= cat.slug %>" data-category="<%= cat.slug %>">
+          <div class="menu-group__head">
+            <span class="section-num"><%= String(cat.sort_order).padStart(2, '0') %></span>
+            <h2 class="menu-group__title"><%= cat.name %></h2>
+          </div>
+
+                   <div class="menu-group__list">
+            <% catDishes.forEach(function(dish) { %>
+              <a href="/menu/<%= dish.slug %>" class="menu-row" data-tags="<%= [dish.is_vegetarian ? 'vegetarian' : '', dish.is_spicy ? 'spicy' : '', dish.is_gluten_free ? 'gluten-free' : ''].filter(Boolean).join(' ') %>">
+                <div class="menu-row__thumb">
+                  <img src="/img/dishes/<%= dish.slug %>.jpg" alt="<%= dish.name %>" loading="lazy">
+                </div>
+                <div class="menu-row__main">
+                  <h3 class="menu-row__title">
+                    <%= dish.name %>
+                    <% if (dish.is_spicy) { %><span class="menu-row__badge menu-row__badge--hot">острое</span><% } %>
+                    <% if (dish.is_vegetarian) { %><span class="menu-row__badge">вег</span><% } %>
+                  </h3>
+                  <p class="menu-row__desc"><%= dish.composition || dish.description %></p>
+                </div>
+                <div class="menu-row__price"><%= dish.price %> ₽</div>
+              </a>
+            <% }); %>
+          </div>
+        </div>
+      <% } %>
+    <% }); %>
+
+    <div class="menu-empty" data-menu-empty hidden>
+      <p>По этому фильтру ничего не нашлось</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-delivery">
+  <div class="container cta-delivery__inner">
+    <h2 class="cta-delivery__title">Голодно?</h2>
+    <p class="cta-delivery__text">Выбирайте пиццу, добавляйте в корзину и оформляйте заказ. Привезём горячей за 45 минут.</p>
+    <div class="cta-delivery__actions">
+      <a href="/cart" class="btn btn--solid">Перейти в корзину</a>
+      <a href="/booking" class="btn btn--ghost">Забронировать стол</a>
+    </div>
+  </div>
+</section>

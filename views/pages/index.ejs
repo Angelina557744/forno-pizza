@@ -1,0 +1,215 @@
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <svg viewBox="0 0 600 600" class="hero__deco">
+      <circle cx="300" cy="300" r="280" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.15"/>
+      <circle cx="300" cy="300" r="220" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.1"/>
+      <circle cx="300" cy="300" r="160" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.08"/>
+    </svg>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__left">
+      <span class="hero__eyebrow">
+        <span class="hero__eyebrow-line"></span>
+        Дровяная пиццерия с 2018 года
+      </span>
+      <h1 class="hero__title">
+        <span class="hero__title-line">Огонь.</span>
+        <span class="hero__title-line hero__title-line--italic">Тесто.</span>
+        <span class="hero__title-line">Неаполь.</span>
+      </h1>
+      <p class="hero__lead">
+        Печём пиццу на дровах, как в Неаполе. Тесто на закваске вызревает 48 часов, помидоры привозят из Кампании, а моцареллу делаем сами.
+      </p>
+      <div class="hero__actions">
+        <a href="/menu" class="btn btn--solid">
+          Смотреть меню
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="/booking" class="btn btn--ghost">Забронировать стол</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-num">48<small>ч</small></span>
+          <span class="hero__stat-label">вызревает тесто</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-num">500<small>°C</small></span>
+          <span class="hero__stat-label">печь на дровах</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-num">90<small>с</small></span>
+          <span class="hero__stat-label">и пицца готова</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__right">
+      <div class="hero__plate">
+        <div class="hero__plate-ring"></div>
+                <div class="hero__plate-inner">
+          <img src="/img/hero/pizza.jpg" alt="Пицца из дровяной печи" class="hero__pizza">
+        </div>
+        </div>
+        <div class="hero__plate-tag hero__plate-tag--1">Маргарита</span></div>
+        <div class="hero__plate-tag hero__plate-tag--2">590 ₽</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span>листайте</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Forno</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Pizza Napoletana</span><span class="marquee__dot">·</span>
+    <span>Дровяная печь</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Forno a legna</span><span class="marquee__dot">·</span>
+    <span>Тесто на закваске</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Lievito madre</span><span class="marquee__dot">·</span>
+    <span>Forno</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Pizza Napoletana</span><span class="marquee__dot">·</span>
+    <span>Дровяная печь</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Forno a legna</span><span class="marquee__dot">·</span>
+    <span>Тесто на закваске</span><span class="marquee__dot">·</span>
+    <span class="marquee__italic">Lievito madre</span><span class="marquee__dot">·</span>
+  </div>
+</div>
+
+<section class="about-strip">
+  <div class="container about-strip__inner">
+    <div class="about-strip__label">
+      <span class="section-num">01</span>
+      <span class="section-label">О печи</span>
+    </div>
+    <div class="about-strip__content">
+      <p class="about-strip__lead">
+        Наша печь сложена вручную из неаполитанского кирпича. Разогреваем её до 500 градусов и печём пиццу ровно 90 секунд. Именно столько нужно, чтобы тесто стало воздушным, а начинка раскрылась, но не потеряла сочность.
+      </p>
+      <p class="about-strip__text">
+        Всё остальное подчинено этой простоте. Тесто на закваске, томаты Сан-Марцано, моцарелла фиор ди латте, оливковое масло первого отжима. Ничего лишнего.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="menu-preview">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Из печи</h2>
+      </div>
+      <a href="/menu" class="section-head__link">
+        Всё меню
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+       <div class="dish-grid">
+      <% hits.forEach(function(dish, i) { %>
+        <a href="/menu/<%= dish.slug %>" class="dish-card" style="--i: <%= i %>">
+          <div class="dish-card__media">
+            <img src="/img/dishes/<%= dish.slug %>.jpg" alt="<%= dish.name %>" loading="lazy" class="dish-card__img">
+            <% if (dish.is_spicy) { %><span class="dish-card__tag dish-card__tag--hot">острое</span><% } %>
+            <% if (dish.is_vegetarian) { %><span class="dish-card__tag">вегетарианское</span><% } %>
+          </div>
+          <div class="dish-card__body">
+            <h3 class="dish-card__title"><%= dish.name %></h3>
+            <p class="dish-card__desc"><%= dish.description %></p>
+            <div class="dish-card__foot">
+              <span class="dish-card__price"><%= dish.price %> ₽</span>
+              <span class="dish-card__more">
+                Подробнее
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Как мы готовим</h2>
+    </div>
+
+    <div class="process__grid">
+      <div class="process__item">
+        <span class="process__num">01</span>
+        <h3>Закваска</h3>
+        <p>Тесто живёт 48 часов. За это время оно становится лёгким, ароматным и легкоусвояемым.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">02</span>
+        <h3>Дрова</h3>
+        <p>Топим печь буковыми дровами. Они дают ровный жар и тонкий аромат дыма.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">03</span>
+        <h3>90 секунд</h3>
+        <p>Ровно столько печётся наша пицца. Ни секундой больше, иначе тесто потеряет воздушность.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">04</span>
+        <h3>Подача</h3>
+        <p>Подаём сразу из печи, на разогретой тарелке, чтобы пицца оставалась горячей до последнего куска.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Гости говорят</h2>
+      </div>
+    </div>
+
+    <div class="swiper reviews-swiper">
+      <div class="swiper-wrapper">
+        <% reviews.forEach(function(r) { %>
+          <div class="swiper-slide">
+            <div class="review">
+              <div class="review__stars">
+                <% for (let i = 0; i < r.rating; i++) { %>
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .5-5.5 4.5 2 7-6.5-4-6.5 4 2-7L2 9.5 9 9z"/></svg>
+                <% } %>
+              </div>
+              <p class="review__text"><%= r.text %></p>
+              <span class="review__author"><%= r.name %></span>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <div class="swiper-pagination reviews-swiper__pagination"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-delivery">
+  <div class="container cta-delivery__inner">
+    <div class="cta-delivery__deco" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.4"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.3"/>
+      </svg>
+    </div>
+    <h2 class="cta-delivery__title">Привезём горячей</h2>
+    <p class="cta-delivery__text">Доставка по центру Москвы за 45 минут. Бесплатно от 1500 рублей. Заказ принимаем до 22:30.</p>
+    <div class="cta-delivery__actions">
+      <a href="/delivery" class="btn btn--solid">Условия доставки</a>
+      <a href="/menu" class="btn btn--ghost">Заказать сейчас</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,134 @@
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    <span class="page-hero__eyebrow"><span class="section-num">Оформление</span></span>
+    <h1 class="page-hero__title">Почти готово</h1>
+  </div>
+</section>
+
+<section class="checkout">
+  <div class="container">
+    <form class="checkout__form" method="POST" action="/checkout">
+
+      <div class="checkout__block">
+        <h2 class="checkout__block-title">Способ получения</h2>
+        <div class="checkout__radios">
+          <label class="checkout__radio">
+            <input type="radio" name="delivery_type" value="delivery" checked>
+            <span>Доставка курьером</span>
+          </label>
+          <label class="checkout__radio">
+            <input type="radio" name="delivery_type" value="pickup">
+            <span>Самовывоз</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checkout__block">
+        <h2 class="checkout__block-title">Ваши данные</h2>
+               <div class="checkout__fields">
+          <label class="field">
+            <span>Имя</span>
+            <input type="text" name="customer_name" required minlength="2" maxlength="60" placeholder="Как к вам обращаться">
+          </label>
+          <label class="field">
+            <span>Телефон</span>
+            <input type="tel" name="customer_phone" required pattern="[\\d\\s\\+\\-\\(\\)]{10,20}" placeholder="+7 999 000 00 00">
+          </label>
+          <label class="field field--full">
+            <span>Email</span>
+            <input type="email" name="customer_email" placeholder="Для чека и уведомлений">
+          </label>
+          <label class="field field--full" data-address-field>
+            <span>Адрес доставки</span>
+            <input type="text" name="address" minlength="5" maxlength="200" placeholder="Улица, дом, квартира">
+          </label>
+          <label class="field field--full">
+            <span>Комментарий</span>
+            <textarea name="comment" rows="3" maxlength="300" placeholder="Домофон, подъезд, пожелания"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="checkout__block">
+        <h2 class="checkout__block-title">Способ оплаты</h2>
+        <div class="checkout__radios">
+          <label class="checkout__radio">
+            <input type="radio" name="payment_method" value="online" checked>
+            <span>Картой онлайн</span>
+          </label>
+          <label class="checkout__radio">
+            <input type="radio" name="payment_method" value="cash">
+            <span>При получении</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="btn btn--solid btn--full checkout__submit" type="submit">Оформить заказ</button>
+    </form>
+
+    <aside class="checkout__summary">
+      <h2 class="checkout__summary-title">Ваш заказ</h2>
+      <div class="checkout__items">
+        <% cart.forEach(function(item) { %>
+          <div class="checkout__item">
+            <span><%= item.name %> <em>× <%= item.quantity %></em></span>
+            <span><%= item.price * item.quantity %> ₽</span>
+          </div>
+        <% }); %>
+      </div>
+      <div class="checkout__total">
+        <span>Итого</span>
+        <strong><%= cartTotal %> ₽</strong>
+      </div>
+    </aside>
+  </div>
+</section>
+<script>
+  const addressField = document.querySelector('[data-address-field]');
+  const deliveryRadios = document.querySelectorAll('input[name="delivery_type"]');
+  const addressInput = addressField ? addressField.querySelector('input') : null;
+  const checkoutForm = document.querySelector('.checkout__form');
+
+  function syncAddress() {
+    const isDelivery = document.querySelector('input[name="delivery_type"]:checked').value === 'delivery';
+    if (addressField) addressField.style.display = isDelivery ? 'flex' : 'none';
+    if (addressInput) addressInput.required = isDelivery;
+  }
+
+  deliveryRadios.forEach(r => r.addEventListener('change', syncAddress));
+  syncAddress();
+
+  if (checkoutForm) {
+    checkoutForm.addEventListener('submit', (e) => {
+      const name = checkoutForm.querySelector('input[name="customer_name"]').value.trim();
+      const phone = checkoutForm.querySelector('input[name="customer_phone"]').value.trim();
+      const email = checkoutForm.querySelector('input[name="customer_email"]').value.trim();
+      const isDelivery = document.querySelector('input[name="delivery_type"]:checked').value === 'delivery';
+      const address = addressInput ? addressInput.value.trim() : '';
+
+      if (name.length < 2) {
+        e.preventDefault();
+        alert('Введите имя (минимум 2 символа).');
+        return;
+      }
+
+      if (phone.replace(/\D/g, '').length < 10) {
+        e.preventDefault();
+        alert('Введите корректный номер телефона.');
+        return;
+      }
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        e.preventDefault();
+        alert('Проверьте email.');
+        return;
+      }
+
+      if (isDelivery && address.length < 5) {
+        e.preventDefault();
+        alert('Введите полный адрес доставки.');
+        return;
+      }
+    });
+  }
+</script>

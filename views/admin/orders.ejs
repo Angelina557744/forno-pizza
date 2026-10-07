@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <%- include('partials/layout-head', { title: 'Заказы', active: 'orders' }) %>
+
+  <% if (orders.length === 0) { %>
+    <p class="admin-empty">Заказов пока нет</p>
+  <% } else { %>
+    <div class="admin-table">
+      <div class="admin-table__head admin-table__head--orders">
+        <span>№</span>
+        <span>Дата</span>
+        <span>Клиент</span>
+        <span>Телефон</span>
+        <span>Тип</span>
+        <span>Сумма</span>
+        <span>Статус</span>
+        <span></span>
+      </div>
+      <% orders.forEach(function(o) { %>
+        <div class="admin-table__row admin-table__row--orders">
+          <span class="admin-table__mono"><%= o.order_number %></span>
+          <span class="admin-table__mono"><%= o.created_at.slice(0, 16) %></span>
+          <span><%= o.customer_name %></span>
+          <span class="admin-table__mono"><%= o.customer_phone %></span>
+          <span><%= o.delivery_type === 'delivery' ? 'Доставка' : 'Самовывоз' %></span>
+          <span class="admin-table__mono"><%= o.total %> ₽</span>
+          <span class="admin-status admin-status--<%= o.status %>"><%= {new:'Новый',processing:'В работе',delivered:'Доставлен',cancelled:'Отменён'}[o.status] || o.status %></span>
+          <a href="/admin/orders/<%= o.id %>" class="admin-link">Открыть</a>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <%- include('partials/layout-foot') %>
+</body>
+</html>

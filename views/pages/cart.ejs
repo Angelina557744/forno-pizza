@@ -1,0 +1,72 @@
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    <span class="page-hero__eyebrow"><span class="section-num">Корзина</span></span>
+    <h1 class="page-hero__title">Ваш заказ</h1>
+  </div>
+</section>
+
+<section class="cart-page">
+  <div class="container">
+    <% if (!cart || cart.length === 0) { %>
+      <div class="cart-page__empty">
+        <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+          <circle cx="40" cy="40" r="32" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 5"/>
+          <path d="M28 40h24M40 28v24" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <h2>Корзина пуста</h2>
+        <p>Самое время выбрать что-то из меню</p>
+        <a href="/menu" class="btn btn--solid">Перейти в меню</a>
+      </div>
+    <% } else { %>
+      <div class="cart-page__grid">
+        <div class="cart-page__list">
+          <% cart.forEach(function(item) { %>
+            <div class="cart-page__row" data-cart-item="<%= item.key %>">
+              <div class="cart-page__body">
+                <div class="cart-page__name"><%= item.name %></div>
+                <% if (item.size || item.dough || (item.toppings && item.toppings.length)) { %>
+                  <div class="cart-page__meta">
+                    <% if (item.size) { %><span><%= item.size %> см</span><% } %>
+                    <% if (item.dough) { %><span><%= item.dough %></span><% } %>
+                    <% if (item.toppings && item.toppings.length) { %>
+                      <span><%= item.toppings.join(', ') %></span>
+                    <% } %>
+                  </div>
+                <% } %>
+              </div>
+              <div class="cart-page__qty">
+                <button type="button" data-cart-dec>−</button>
+                <span data-cart-qty><%= item.quantity %></span>
+                <button type="button" data-cart-inc>+</button>
+              </div>
+              <div class="cart-page__price"><%= item.price * item.quantity %> ₽</div>
+              <button class="cart-page__remove" type="button" data-cart-remove aria-label="Удалить">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          <% }); %>
+
+          <div class="cart-page__actions">
+            <a href="/menu" class="btn btn--ghost">Продолжить выбор</a>
+            <button class="cart-page__clear" type="button" data-cart-clear>Очистить корзину</button>
+          </div>
+        </div>
+
+        <aside class="cart-page__summary">
+          <h2 class="cart-page__summary-title">Итого</h2>
+          <div class="cart-page__summary-row">
+            <span>Товары</span>
+            <strong data-cart-total><%= cartTotal %> ₽</strong>
+          </div>
+          <div class="cart-page__summary-row">
+            <span>Доставка</span>
+            <span>Рассчитывается при оформлении</span>
+          </div>
+          <a href="/checkout" class="btn btn--solid btn--full">Оформить заказ</a>
+        </aside>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<script src="/js/cart.js"></script>

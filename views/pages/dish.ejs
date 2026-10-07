@@ -1,0 +1,143 @@
+<section class="dish-page">
+  <div class="container">
+
+    <nav class="breadcrumbs">
+      <a href="/">Главная</a>
+      <span>/</span>
+      <a href="/menu">Меню</a>
+      <span>/</span>
+      <a href="/menu#cat-<%= dish.category_slug %>"><%= dish.category_name %></a>
+      <span>/</span>
+      <span><%= dish.name %></span>
+    </nav>
+
+    <div class="dish-page__grid">
+
+            <div class="dish-page__media">
+        <div class="dish-page__image">
+          <img src="/img/dishes/<%= dish.slug %>.jpg" alt="<%= dish.name %>" class="dish-page__img">
+        </div>
+      </div>
+      </div>
+
+      <div class="dish-page__info">
+        <span class="section-num"><%= dish.category_name %></span>
+        <h1 class="dish-page__title"><%= dish.name %></h1>
+        <p class="dish-page__desc"><%= dish.description %></p>
+
+        <% if (dish.composition) { %>
+          <div class="dish-page__composition">
+            <span class="dish-page__composition-label">Состав</span>
+            <p><%= dish.composition %></p>
+          </div>
+        <% } %>
+
+        <% if (dish.is_pizza) { %>
+          <div class="pizza-builder" data-pizza-builder
+               data-base-price="<%= dish.price %>"
+               data-dish-id="<%= dish.id %>"
+               data-dish-name="<%= dish.name %>">
+
+            <div class="pizza-builder__group">
+              <span class="pizza-builder__label">Размер</span>
+              <div class="pizza-builder__options">
+                <label class="option-btn">
+                  <input type="radio" name="pizza-size" value="25" checked>
+                  <span>25 см</span>
+                </label>
+                <label class="option-btn">
+                  <input type="radio" name="pizza-size" value="30">
+                  <span>30 см</span>
+                </label>
+                <label class="option-btn">
+                  <input type="radio" name="pizza-size" value="35">
+                  <span>35 см</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="pizza-builder__group">
+              <span class="pizza-builder__label">Тесто</span>
+              <div class="pizza-builder__options">
+                <label class="option-btn">
+                  <input type="radio" name="pizza-dough" value="classic" data-label="Классическое" checked>
+                  <span>Классическое</span>
+                </label>
+                <label class="option-btn">
+                  <input type="radio" name="pizza-dough" value="thin" data-label="Тонкое">
+                  <span>Тонкое +50 ₽</span>
+                </label>
+                <label class="option-btn">
+                  <input type="radio" name="pizza-dough" value="gluten-free" data-label="Без глютена">
+                  <span>Без глютена +150 ₽</span>
+                </label>
+              </div>
+            </div>
+
+            <% if (toppings.length) { %>
+              <div class="pizza-builder__group">
+                <span class="pizza-builder__label">Добавить</span>
+                <div class="pizza-builder__toppings">
+                  <% toppings.forEach(function(t) { %>
+                    <label class="topping-check">
+                      <input type="checkbox" name="pizza-topping" value="<%= t.id %>" data-price="<%= t.price %>" data-name="<%= t.name %>">
+                      <span class="topping-check__box"></span>
+                      <span class="topping-check__name"><%= t.name %></span>
+                      <span class="topping-check__price">+<%= t.price %> ₽</span>
+                    </label>
+                  <% }); %>
+                </div>
+              </div>
+            <% } %>
+
+            <div class="pizza-builder__foot">
+              <div class="pizza-builder__price">
+                <span>Итого</span>
+                <strong data-pizza-price><%= dish.price %> ₽</strong>
+              </div>
+              <button class="btn btn--solid" type="button" data-pizza-add>В корзину</button>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="dish-page__foot">
+            <div class="dish-page__price"><%= dish.price %> ₽</div>
+            <button class="btn btn--solid" type="button" data-add-simple
+                    data-id="<%= dish.id %>"
+                    data-name="<%= dish.name %>"
+                    data-price="<%= dish.price %>">В корзину</button>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <% if (similar.length) { %>
+      <section class="dish-similar">
+        <div class="section-head">
+          <div class="section-head__left">
+            <span class="section-num">Похожее</span>
+            <h2 class="section-title">Из той же категории</h2>
+          </div>
+        </div>
+
+                <div class="dish-grid dish-grid--similar">
+          <% similar.forEach(function(s, i) { %>
+            <a href="/menu/<%= s.slug %>" class="dish-card">
+              <div class="dish-card__media">
+                <img src="/img/dishes/<%= s.slug %>.jpg" alt="<%= s.name %>" loading="lazy" class="dish-card__img">
+              </div>
+              <div class="dish-card__body">
+                <h3 class="dish-card__title"><%= s.name %></h3>
+                <div class="dish-card__foot">
+                  <span class="dish-card__price"><%= s.price %> ₽</span>
+                  <span class="dish-card__more">Подробнее</span>
+                </div>
+              </div>
+            </a>
+          <% }); %>
+        </div>
+      </section>
+    <% } %>
+
+  </div>
+</section>
